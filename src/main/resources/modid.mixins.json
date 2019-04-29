@@ -1,10 +1,9 @@
 {
   "required": true,
-  "package": "com.github.draylar.miners_horizon.mixin",
+  "package": "com.github.draylar.modid.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinPortalForcer",
-    "MixinUsePickaxe"
+
   ],
   "injectors": {
     "defaultRequire": 1
