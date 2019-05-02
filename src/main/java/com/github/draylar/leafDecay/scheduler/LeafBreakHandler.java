@@ -7,7 +7,10 @@ import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -56,8 +59,19 @@ public class LeafBreakHandler
         {
             FluidState fluidState_1 = world.getFluidState(pos);
 
-            // play sound & display particles
-            // world.playLevelEvent(2001, pos, Block.getRawIdFromState(blockState_1));
+            // play sound && add particles
+            if(AutoConfig.getConfigHolder(LeafDecayConfig.class).getConfig().playSound)
+            {
+                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_CROP_BREAK, SoundCategory.BLOCKS, 1, 1, false);
+            }
+
+            if(AutoConfig.getConfigHolder(LeafDecayConfig.class).getConfig().leafParticles)
+            {
+                if(world.isClient)
+                {
+                    MinecraftClient.getInstance().particleManager.addBlockBreakParticles(pos, blockState_1);
+                }
+            }
 
             // drop stacks
             BlockEntity blockEntity_1 = blockState_1.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
