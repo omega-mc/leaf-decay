@@ -1,7 +1,15 @@
 package com.github.draylar.leafDecay.scheduler;
 
+import com.github.draylar.leafDecay.LeafDecayConfig;
 import com.github.draylar.leafDecay.util.LeavesBreaker;
+import me.sargunvohra.mcmods.autoconfig1.AutoConfig;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
@@ -40,6 +48,22 @@ public class LeafBreakHandler
 
     private static void breakLeafBlock(FutureLeafBreak futureBreak)
     {
-        futureBreak.getWorld().breakBlock(futureBreak.getPos(), true);
+        BlockPos pos = futureBreak.getPos();
+        World world = futureBreak.getWorld();
+        BlockState blockState_1 = world.getBlockState(pos);
+
+        if (!blockState_1.isAir())
+        {
+            FluidState fluidState_1 = world.getFluidState(pos);
+
+            // play sound & display particles
+            // world.playLevelEvent(2001, pos, Block.getRawIdFromState(blockState_1));
+
+            // drop stacks
+            BlockEntity blockEntity_1 = blockState_1.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
+            Block.dropStacks(blockState_1, world, pos, blockEntity_1);
+
+            world.setBlockState(pos, fluidState_1.getBlockState(), 3);
+        }
     }
 }

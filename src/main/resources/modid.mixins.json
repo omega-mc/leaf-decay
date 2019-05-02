@@ -3,7 +3,8 @@
   "package": "com.github.draylar.leafDecay.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "LeafDecayMixin"
+    "LeafDecayMixin",
+    "BlockBreakMixin"
   ],
   "injectors": {
     "defaultRequire": 1
