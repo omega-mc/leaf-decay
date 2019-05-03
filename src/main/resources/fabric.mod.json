@@ -21,6 +21,9 @@
   "entrypoints": {
     "main": [
       "com.github.draylar.leafDecay.LeafDecay"
+    ],
+    "modmenu": [
+      "com.github.draylar.leafDecay.ModMenuIntegration"
     ]
   },
   "mixins": [
