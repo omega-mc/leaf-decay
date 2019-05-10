@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "LeafDecayMixin",
-    "BlockBreakMixin"
+    "LogBreakMixin"
   ],
   "injectors": {
     "defaultRequire": 1

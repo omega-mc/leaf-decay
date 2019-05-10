@@ -23,17 +23,6 @@ dependencies {
 	mappings "net.fabricmc:yarn:1.14+build.1"
 	modCompile "net.fabricmc:fabric-loader:0.4.2+build.132"
 
-	// cloth & autoconfig
-	modCompile "cloth-config:ClothConfig:0.2.1.14"
-	modCompile "me.sargunvohra.mcmods:auto-config:1.0.0+mc1.14"
-
-	// jij
-	include "cloth-config:ClothConfig:0.2.1.14"
-	include "me.sargunvohra.mcmods:auto-config:1.0.0+mc1.14"
-
-	// mod menu compat
-	modCompile "io.github.prospector.modmenu:ModMenu:1.4.0-72"
-
 	//Fabric api
 	modCompile "net.fabricmc:fabric:0.2.7+build.127"
 }

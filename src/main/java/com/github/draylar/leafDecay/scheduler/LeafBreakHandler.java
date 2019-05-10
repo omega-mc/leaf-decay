@@ -1,8 +1,6 @@
 package com.github.draylar.leafDecay.scheduler;
 
-import com.github.draylar.leafDecay.LeafDecayConfig;
 import com.github.draylar.leafDecay.util.LeavesBreaker;
-import me.sargunvohra.mcmods.autoconfig1.AutoConfig;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -60,18 +58,10 @@ public class LeafBreakHandler
             FluidState fluidState_1 = world.getFluidState(pos);
 
             // play sound && add particles
-            if(AutoConfig.getConfigHolder(LeafDecayConfig.class).getConfig().playSound)
-            {
-                world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_CROP_BREAK, SoundCategory.BLOCKS, 1, 1, false);
-            }
 
-            if(AutoConfig.getConfigHolder(LeafDecayConfig.class).getConfig().leafParticles)
-            {
-                if(world.isClient)
-                {
-                    MinecraftClient.getInstance().particleManager.addBlockBreakParticles(pos, blockState_1);
-                }
-            }
+            world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_CROP_BREAK, SoundCategory.BLOCKS, 1, 1, false);
+            MinecraftClient.getInstance().particleManager.addBlockBreakParticles(pos, blockState_1);
+
 
             // drop stacks
             BlockEntity blockEntity_1 = blockState_1.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;

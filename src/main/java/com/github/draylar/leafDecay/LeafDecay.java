@@ -1,5 +1,6 @@
 package com.github.draylar.leafDecay;
 
+import com.github.draylar.leafDecay.config.LeafDecayConfig;
 import com.github.draylar.leafDecay.scheduler.LeafBreakHandler;
 import me.sargunvohra.mcmods.autoconfig1.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1.serializer.GsonConfigSerializer;
