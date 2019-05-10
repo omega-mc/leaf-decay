@@ -49,25 +49,6 @@ public class LeafBreakHandler
 
     private static void breakLeafBlock(FutureLeafBreak futureBreak)
     {
-        BlockPos pos = futureBreak.getPos();
-        World world = futureBreak.getWorld();
-        BlockState blockState_1 = world.getBlockState(pos);
-
-        if (!blockState_1.isAir())
-        {
-            FluidState fluidState_1 = world.getFluidState(pos);
-
-            // play sound && add particles
-
-            world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_CROP_BREAK, SoundCategory.BLOCKS, 1, 1, false);
-            MinecraftClient.getInstance().particleManager.addBlockBreakParticles(pos, blockState_1);
-
-
-            // drop stacks
-            BlockEntity blockEntity_1 = blockState_1.getBlock().hasBlockEntity() ? world.getBlockEntity(pos) : null;
-            Block.dropStacks(blockState_1, world, pos, blockEntity_1);
-
-            world.setBlockState(pos, fluidState_1.getBlockState(), 3);
-        }
+        futureBreak.getWorld().breakBlock(futureBreak.getPos(), true);
     }
 }
