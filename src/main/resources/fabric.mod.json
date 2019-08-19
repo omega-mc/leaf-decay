@@ -2,7 +2,7 @@
 {
   "schemaVersion": 1,
   "id": "leaf-decay",
-  "version": "1.0.4",
+  "version": "1.1.0",
 
   "name": "Leaf Decay",
   "description": "1.14 mod that adds quick leaf decay.",
