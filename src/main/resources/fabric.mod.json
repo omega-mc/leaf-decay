@@ -2,25 +2,25 @@
 {
   "schemaVersion": 1,
   "id": "leaf-decay",
-  "version": "1.1.0",
+  "version": "${version}",
 
   "name": "Leaf Decay",
-  "description": "1.14 mod that adds quick leaf decay.",
+  "description": "Simple mod for quick leaf decay!",
   "authors": [
     "Draylar"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/leaf-decay",
+    "sources": "https://github.com/Draylar/leaf-decay"
   },
 
-  "license": "GPLv3",
+  "license": "MIT",
   "icon": "assets/leaf-decay/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.draylar.leafDecay.LeafDecay"
+      "com.github.draylar.leafdecay.LeafDecay"
     ]
   },
   "mixins": [

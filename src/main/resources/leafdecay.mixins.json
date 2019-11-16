@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.github.draylar.leafDecay.mixin",
+  "package": "com.github.draylar.leafdecay.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "LeafDecayMixin",
