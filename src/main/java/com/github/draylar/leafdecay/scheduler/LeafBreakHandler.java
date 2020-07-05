@@ -1,14 +1,15 @@
 package com.github.draylar.leafdecay.scheduler;
 
 import com.github.draylar.leafdecay.util.LeavesBreaker;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.DefaultedList;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.collection.DefaultedList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,7 @@ public class LeafBreakHandler {
     static {
         breakList = new ArrayList<>();
 
-        ServerTickCallback.EVENT.register(tick ->
-        {
+        ServerTickEvents.END_SERVER_TICK.register(tick -> {
             for (int i = 0; i < breakList.size(); i++) {
                 FutureLeafBreak leafBreak = breakList.get(i);
                 if (leafBreak.getElapsedTime() >= leafBreak.getMaxTime()) {
