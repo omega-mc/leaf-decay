@@ -1,6 +1,6 @@
-package com.github.draylar.leafdecay;
+package draylar.leafdecay;
 
-import com.github.draylar.leafdecay.scheduler.LeafBreakHandler;
+import draylar.leafdecay.scheduler.LeafBreakHandler;
 import net.fabricmc.api.ModInitializer;
 
 public class LeafDecay implements ModInitializer {

@@ -1,4 +1,4 @@
-package com.github.draylar.leafdecay.scheduler;
+package draylar.leafdecay.scheduler;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

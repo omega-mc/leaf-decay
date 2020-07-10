@@ -1,6 +1,6 @@
-package com.github.draylar.leafdecay.mixin;
+package draylar.leafdecay.mixin;
 
-import com.github.draylar.leafdecay.util.LeavesBreaker;
+import draylar.leafdecay.util.LeavesBreaker;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.server.world.ServerWorld;

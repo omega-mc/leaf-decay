@@ -1,7 +1,7 @@
-package com.github.draylar.leafdecay.mixin;
+package draylar.leafdecay.mixin;
 
-import com.github.draylar.leafdecay.scheduler.FutureLeafBreak;
-import com.github.draylar.leafdecay.scheduler.LeafBreakHandler;
+import draylar.leafdecay.scheduler.FutureLeafBreak;
+import draylar.leafdecay.scheduler.LeafBreakHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -1,6 +1,6 @@
-package com.github.draylar.leafdecay.scheduler;
+package draylar.leafdecay.scheduler;
 
-import com.github.draylar.leafdecay.util.LeavesBreaker;
+import draylar.leafdecay.util.LeavesBreaker;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
