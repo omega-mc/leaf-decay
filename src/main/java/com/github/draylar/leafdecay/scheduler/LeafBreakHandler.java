@@ -1,13 +1,16 @@
 package com.github.draylar.leafdecay.scheduler;
 
 import com.github.draylar.leafdecay.util.LeavesBreaker;
-import net.fabricmc.fabric.api.event.server.ServerTickCallback;
+
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.world.World;
 import net.minecraft.util.ItemScatterer;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ public class LeafBreakHandler {
     static {
         breakList = new ArrayList<>();
 
-        ServerTickCallback.EVENT.register(tick ->
+        ServerTickEvents.END_SERVER_TICK.register(tick ->
         {
             for (int i = 0; i < breakList.size(); i++) {
                 FutureLeafBreak leafBreak = breakList.get(i);
@@ -42,10 +45,11 @@ public class LeafBreakHandler {
     }
 
     private static void breakLeafBlock(FutureLeafBreak futureBreak) {
-        BlockState state = futureBreak.getWorld().getBlockState(futureBreak.getPos());
-        futureBreak.getWorld().setBlockState(futureBreak.getPos(), Blocks.AIR.getDefaultState());
+        World world = futureBreak.getWorld();
+    	BlockState state = world.getBlockState(futureBreak.getPos());
+    	world.setBlockState(futureBreak.getPos(), Blocks.AIR.getDefaultState());
 
-        if (!futureBreak.getWorld().isClient) {
+        if (!world.isClient) {
             List<ItemStack> drops = Block.getDroppedStacks(state, (ServerWorld) futureBreak.getWorld(), futureBreak.getPos(), null);
             DefaultedList<ItemStack> defaultedDropList = DefaultedList.ofSize(drops.size(), ItemStack.EMPTY);
 

@@ -18,6 +18,7 @@ out/
 bin/
 .classpath
 .project
+*.launch
 
 # fabric
 
