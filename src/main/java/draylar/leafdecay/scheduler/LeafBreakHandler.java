@@ -1,66 +1,74 @@
 package draylar.leafdecay.scheduler;
 
-import draylar.leafdecay.util.LeavesBreaker;
-
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.World;
-import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.Pair;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class LeafBreakHandler {
 
-    private static ArrayList<FutureLeafBreak> breakList;
+    private static final ArrayList<FutureBlockBreak> breakList = new ArrayList<>();
 
-    static {
-        breakList = new ArrayList<>();
+    public static void init() {
+        ServerTickEvents.END_SERVER_TICK.register(tick -> {
+            List<FutureBlockBreak> nearbyFutureBreakOrigins = new ArrayList<>();
 
-        ServerTickEvents.END_SERVER_TICK.register(tick ->
-        {
-            for (int i = 0; i < breakList.size(); i++) {
-                FutureLeafBreak leafBreak = breakList.get(i);
+            for(Iterator<FutureBlockBreak> iterator = breakList.iterator(); iterator.hasNext();) {
+                FutureBlockBreak leafBreak = iterator.next();
+                // should be broken
                 if (leafBreak.getElapsedTime() >= leafBreak.getMaxTime()) {
-                    breakLeafBlock(leafBreak);
-                    breakList.remove(leafBreak);
-                    LeavesBreaker.onBreak(leafBreak.getWorld(), leafBreak.getPos());
-                } else leafBreak.setElapsedTime(leafBreak.getElapsedTime() + 1);
+                    leafBreak.realize();
+                    iterator.remove();
+                    nearbyFutureBreakOrigins.add(leafBreak);
+                }
+
+                // increment time
+                else {
+                    leafBreak.setElapsedTime(leafBreak.getElapsedTime() + 1);
+                }
             }
+
+            // add all new neighbor breaks to the breakList after we iterate over it to avoid CME
+            nearbyFutureBreakOrigins.forEach(leafBreak -> addNearbyFutureBreaks(leafBreak.getWorld(), leafBreak.getPos()));
         });
     }
 
-    public static void init() {
+    public static void addNearbyFutureBreaks(ServerWorld world, BlockPos pos) {
+        // check all nearby leaf blocks
+        for (Direction direction : Direction.values()) {
+            BlockPos offset = new BlockPos(pos.offset(direction, 1));
+            BlockState newState = world.getBlockState(offset);
 
-    }
-
-    public static void addFutureBreak(FutureLeafBreak futureBreak) {
-        breakList.add(futureBreak);
-    }
-
-    private static void breakLeafBlock(FutureLeafBreak futureBreak) {
-        World world = futureBreak.getWorld();
-    	BlockState state = world.getBlockState(futureBreak.getPos());
-    	world.setBlockState(futureBreak.getPos(), Blocks.AIR.getDefaultState());
-
-        if (!world.isClient) {
-            List<ItemStack> drops = Block.getDroppedStacks(state, (ServerWorld) futureBreak.getWorld(), futureBreak.getPos(), null);
-            DefaultedList<ItemStack> defaultedDropList = DefaultedList.ofSize(drops.size(), ItemStack.EMPTY);
-
-            for (int i = 0; i < drops.size(); i++) {
-                defaultedDropList.set(i, drops.get(i));
+            // ensure new position is a leaf and that the break list doesn't already contain it
+            if (newState.getBlock() instanceof LeavesBlock && !breakListContains(offset)) {
+                // if the leaf would naturally decay, add it to the break list
+                if (!newState.get(LeavesBlock.PERSISTENT) && newState.get(LeavesBlock.DISTANCE) == 7) {
+                    LeafBreakHandler.addFutureBreak(new FutureBlockBreak(world, offset, 5));
+                }
             }
-
-            ItemScatterer.spawn(
-                    futureBreak.getWorld(),
-                    futureBreak.getPos(),
-                    defaultedDropList);
         }
+    }
+
+    private static boolean breakListContains(BlockPos offset) {
+        for(FutureBlockBreak futureBreak : breakList) {
+            if(futureBreak.getPos().equals(offset)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public static void addFutureBreak(FutureBlockBreak futureBreak) {
+        breakList.add(futureBreak);
     }
 }

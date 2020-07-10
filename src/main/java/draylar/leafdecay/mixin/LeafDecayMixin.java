@@ -1,6 +1,6 @@
 package draylar.leafdecay.mixin;
 
-import draylar.leafdecay.util.LeavesBreaker;
+import draylar.leafdecay.scheduler.LeafBreakHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.server.world.ServerWorld;
@@ -15,8 +15,14 @@ import java.util.Random;
 @Mixin(LeavesBlock.class)
 public class LeafDecayMixin {
 
-	@Inject(at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"), method = "randomTick")
+	@Inject(
+			method = "randomTick",
+			at = @At(
+					value = "INVOKE_ASSIGN",
+					target = "Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z"
+			)
+	)
 	private void init(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-		LeavesBreaker.onBreak(world, pos);
+		LeafBreakHandler.addNearbyFutureBreaks(world, pos);
 	}
 }
