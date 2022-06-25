@@ -1,5 +1,9 @@
 plugins {
+<<<<<<< Updated upstream
     id 'fabric-loom' version '0.11-SNAPSHOT'
+=======
+    id 'fabric-loom' version '0.12-SNAPSHOT'
+>>>>>>> Stashed changes
     id 'maven-publish'
 }
 
@@ -31,7 +35,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     // Mod Menu
-    modImplementation("com.terraformersmc:modmenu:$mod_menu_version")
+    modImplementation("com.terraformersmc:modmenu:4.0.0")
 }
 
 processResources {
@@ -49,7 +53,11 @@ tasks.withType(JavaCompile).configureEach {
     // If Javadoc is generated, this must be specified in that task too.
     it.options.encoding = "UTF-8"
 
+<<<<<<< Updated upstream
     // Minecraft 1.18 upwards uses Java 17.
+=======
+    // Minecraft 1.17 (21w19a) upwards uses Java 16.
+>>>>>>> Stashed changes
     it.options.release = 17
 }
 
