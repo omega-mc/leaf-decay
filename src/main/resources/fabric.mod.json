@@ -1,0 +1,35 @@
+
+{
+  "schemaVersion": 1,
+  "id": "leaf-decay",
+  "version": "${version}",
+
+  "name": "Leaf Decay",
+  "description": "Simple mod for quick leaf decay!",
+  "authors": [
+    "Draylar"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/leaf-decay",
+    "sources": "https://github.com/Draylar/leaf-decay",
+    "issues": "https://github.com/Draylar/leaf-decay/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/leaf-decay/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "draylar.leafdecay.LeafDecay"
+    ]
+  },
+  "mixins": [
+    "leafdecay.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.0",
+    "fabric": ">=0.14.0"
+  }
+}

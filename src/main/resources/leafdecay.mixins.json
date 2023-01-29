@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "draylar.leafdecay.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "LeafDecayMixin",
+    "LogBreakMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
