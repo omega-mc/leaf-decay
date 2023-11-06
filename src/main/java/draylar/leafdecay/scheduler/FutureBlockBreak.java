@@ -2,15 +2,9 @@ package draylar.leafdecay.scheduler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 /**
  * Provides information about a block that should break in the future.
@@ -45,19 +39,14 @@ public class FutureBlockBreak {
      * <p>The block broken will drop stacks as normal.
      */
     public void realize() {
-        BlockState state = world.getBlockState(pos);
-        world.setBlockState(pos, Blocks.AIR.getDefaultState());
-
-        if (!world.isClient) {
-            List<ItemStack> drops = Block.getDroppedStacks(state, world, pos, null);
-            DefaultedList<ItemStack> defaultedDropList = DefaultedList.ofSize(drops.size(), ItemStack.EMPTY);
-
-            for (int i = 0; i < drops.size(); i++) {
-                defaultedDropList.set(i, drops.get(i));
-            }
-
-            ItemScatterer.spawn(world, pos, defaultedDropList);
+        if (world.isClient) {
+            return;
         }
+
+        BlockState state = world.getBlockState(pos);
+
+        Block.dropStacks(state, world, pos);
+        world.removeBlock(pos, false);
     }
 
     public int getElapsedTime() {

@@ -4,6 +4,7 @@ import draylar.leafdecay.scheduler.FutureBlockBreak;
 import draylar.leafdecay.scheduler.LeafBreakHandler;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +21,7 @@ public class LogBreakMixin {
             at = @At("TAIL")
     )
     private void afterBreak(World world, BlockPos pos, BlockState state, PlayerEntity player, CallbackInfo info) {
-        if (!world.isClient && (state.getBlock() instanceof PillarBlock) && state.getMaterial().equals(Material.WOOD)) {
+        if (!world.isClient && (state.getBlock() instanceof PillarBlock) && state.isIn(BlockTags.LOGS)) {
             BlockPos upPosition = pos.up();
             BlockState upState = world.getBlockState(upPosition);
 
